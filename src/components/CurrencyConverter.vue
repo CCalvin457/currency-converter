@@ -48,16 +48,17 @@
                 </b-field>
             </div>
         </div>
-        <!-- convert button (might be unnecessary) -->
+        <!-- Calls function to convert amount to target currency -->
         <div class="columns">
-            <b-button>Convert</b-button>
+            <b-button @click="convertCurrency">Convert</b-button>
         </div>
     </section>
 </template>
 
 <script>
 import Cleave from 'cleave.js'
-import { getCurrencies } from '../utils/currencyAPI.js'
+import { getCurrencies, convertCurrency } from '../utils/currencyAPI.js'
+import { toNumberWithCommas } from '../utils/general.js'
 
 const cleave = {
         name: 'cleave',
@@ -92,6 +93,19 @@ export default {
 
     async mounted() {
         this.currencies = await getCurrencies()
+    },
+
+    methods: {
+        async convertCurrency() {
+            let amount = this.currencyOne.value.replace('/,/g', '');
+            amount = Number(amount);
+            let fromCurrency = this.currencyOne.currency;
+            let toCurrency = this.currencyTwo.currency;
+
+            let convertedAmount = await convertCurrency(amount, fromCurrency, toCurrency);
+
+            this.currencyTwo.value = toNumberWithCommas(convertedAmount);
+        }
     }
 };
 </script>
