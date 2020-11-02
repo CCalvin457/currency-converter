@@ -6,7 +6,7 @@
             <div class="column">
                 <b-dropdown v-model="currencyOne.currency">
                     <button class="button is-primary" slot="trigger" slot-scope="{ active }">
-                        <span>Select Currency...</span>
+                        <span>{{currencyOne.currency === '' ? 'Select Currency...' : currencyOne.currency}}</span>
                         <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
                     </button>
 
@@ -30,7 +30,7 @@
             <div class="column">
                 <b-dropdown v-model="currencyTwo.currency">
                     <button class="button is-primary" slot="trigger" slot-scope="{ active }">
-                        <span>Select Currency...</span>
+                        <span>{{currencyTwo.currency === '' ? 'Select Currency...' : currencyTwo.currency}}</span>
                         <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
                     </button>
 
@@ -42,6 +42,7 @@
 
                 <b-field>
                     <b-input v-model="currencyTwo.value"
+                        disabled
                         v-cleave="masks.numeral"
                         icon="currency-usd"></b-input>
                 </b-field>
