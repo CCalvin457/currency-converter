@@ -4,15 +4,20 @@
         <div class="columns">
             <!-- Dropdown for currency 1 -->
             <div class="column">
-                <b-dropdown>
+                <b-dropdown v-model="currencyOne.currency">
                     <button class="button is-primary" slot="trigger" slot-scope="{ active }">
                         <span>Select Currency...</span>
                         <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
                     </button>
+
+                    <b-dropdown-item aria-role="listItem"
+                        :value="currency.id"
+                        v-for="currency in currencies" :key="currency.id"
+                    >{{currency.currencyName}} ({{currency.id}})</b-dropdown-item>
                 </b-dropdown>
 
                 <b-field>
-                    <b-input v-model="currencyOne"
+                    <b-input v-model="currencyOne.value"
                         v-cleave="masks.numeral"
                         icon="currency-usd"></b-input>
                 </b-field>
@@ -23,15 +28,20 @@
             </div>
             <!-- Dropdown for currency 2 -->
             <div class="column">
-                <b-dropdown>
+                <b-dropdown v-model="currencyTwo.currency">
                     <button class="button is-primary" slot="trigger" slot-scope="{ active }">
                         <span>Select Currency...</span>
                         <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
                     </button>
+
+                     <b-dropdown-item aria-role="listItem"
+                        :value="currency.id"
+                        v-for="currency in currencies" :key="currency.id"
+                    >{{currency.currencyName}} ({{currency.id}})</b-dropdown-item>
                 </b-dropdown>
 
                 <b-field>
-                    <b-input v-model="currencyTwo"
+                    <b-input v-model="currencyTwo.value"
                         v-cleave="masks.numeral"
                         icon="currency-usd"></b-input>
                 </b-field>
@@ -46,6 +56,7 @@
 
 <script>
 import Cleave from 'cleave.js'
+import { getCurrencies } from '../utils/currencyAPI.js'
 
 const cleave = {
         name: 'cleave',
@@ -67,9 +78,20 @@ export default {
                 numeralThousandsGroupStyle: 'thousand'
             }
         },
-        currencyOne: 0.00,
-        currencyTwo: 0.00
-    })
+        currencyOne: {
+            value: '0.00',
+            currency: ''
+        },
+        currencyTwo: {
+            value: '0.00',
+            currency: ''
+        },
+        currencies: []
+    }),
+
+    async mounted() {
+        this.currencies = await getCurrencies()
+    }
 };
 </script>
 
