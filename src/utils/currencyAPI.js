@@ -1,12 +1,19 @@
 require('dotenv').config();
 
+/**
+ * Returns the list of currencies from free.currconv.com
+ *
+ * @return {array} currencies with currency name and id.
+ */
+
 export async function getCurrencies() {
     let currencies = JSON.parse(localStorage.getItem('currencies'));
     
     if(currencies === null) {
         currencies = [];
         // get currency from currencyconverterapi.com
-        let apiResult = await fetch(`https://free.currconv.com/api/v7/currencies?apiKey=${process.env.VUE_APP_CURRENCY_API}`)
+        let url = `https://free.currconv.com/api/v7/currencies?apiKey=${process.env.VUE_APP_CURRENCY_API}`
+        let apiResult = await fetch(url)
         .catch(error => {
             console.error(`Error: ${error}`);
         });
@@ -26,5 +33,31 @@ export async function getCurrencies() {
     }
 
     return currencies;
+}
+
+/**
+ * Returns amount converted to target currency
+ * 
+ * @param {number} amount The amount to be converted
+ * @param {string} from The original currency
+ * @param {string} to The currency to be converted to
+ * @return {number} The converted amount
+ */
+export async function convertCurrency(amount, from, to) {
+    let fromCurrency = encodeURIComponent(from);
+    let toCurrency = encodeURIComponent(to);
+    let query = fromCurrency + "_" + toCurrency;
+
+    let url = `https://free.currconv.com/api/v7/convert?q=${query}&compact=ultra&apiKey=${process.env.VUE_APP_CURRENCY_API}`;
+    
+    let apiResult = await fetch(url).catch(error => {
+        console.error(`Error: ${error}`);
+    });
+    
+    let data = await apiResult.json();
+
+    let total = amount * data[query];
+    
+    return total;
 }
 
