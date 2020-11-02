@@ -66,7 +66,9 @@ export default {
                 numeral: true,
                 numeralThousandsGroupStyle: 'thousand'
             }
-        }
+        },
+        currencyOne: 0.00,
+        currencyTwo: 0.00
     })
 };
 </script>
