@@ -2,7 +2,7 @@ require('dotenv').config();
 
 export async function getCurrencies() {
     let currencies = JSON.parse(localStorage.getItem('currencies'));
-    // console.log(currencies);
+    
     if(currencies === null) {
         currencies = [];
         // get currency from currencyconverterapi.com
@@ -13,9 +13,13 @@ export async function getCurrencies() {
 
         // getting the json data
         let data = await apiResult.json();
-        
-        for(var currency in data.results) {
-            currencies.push(currency);
+        data = data.results;
+
+        for(var currency in data) {
+            currencies.push({
+                id: data[currency].id,
+                currencyName: data[currency].currencyName
+            });
         }
 
         localStorage.setItem('currencies', JSON.stringify(currencies));
