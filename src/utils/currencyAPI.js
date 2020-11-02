@@ -58,6 +58,5 @@ export async function convertCurrency(amount, from, to) {
 
     let total = amount * data[query];
     
-    return total;
+    return (Math.round(total * 100) / 100).toFixed(2);
 }
-
