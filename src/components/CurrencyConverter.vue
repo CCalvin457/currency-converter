@@ -122,14 +122,14 @@ export default {
                 this.areCurrenciesSelected = false;
                 return;
             }
-
             this.areCurrenciesSelected = true;
+
+            let amount = this.currencyOne.value.replace(/,/g, '');
             
-            if(this.currencyOne.value === '' || !isNaN(this.currencyOne.value)) {
+            if(this.currencyOne.value === '' || isNaN(amount)) {
                 this.currencyOne.value = "0.00"
             }
 
-            let amount = this.currencyOne.value.replace(/,/g, '');
             let fromCurrency = this.currencyOne.currency;
             let toCurrency = this.currencyTwo.currency;
 
