@@ -29,7 +29,10 @@
             </div>
             <!-- Swaps the two selected currencies -->
             <div class="column is-2">
-                <b-button icon-right="swap-horizontal-bold" is-large></b-button>
+                <b-button icon-right="swap-horizontal-bold" 
+                    size="is-medium"
+                    @click="swapCurrencies"
+                ></b-button>
             </div>
             <!-- Dropdown for currency 2 -->
             <div class="column is-5">
@@ -112,14 +115,20 @@ export default {
             if(this.currencyOne.value === '') {
                 this.currencyOne.value = "0.00"
             }
-            let amount = this.currencyOne.value.replace('/,/g', '');
-            amount = Number(amount);
+
+            let amount = this.currencyOne.value.replace(/,/g, '');
             let fromCurrency = this.currencyOne.currency;
             let toCurrency = this.currencyTwo.currency;
 
             let convertedAmount = await convertCurrency(amount, fromCurrency, toCurrency);
 
             this.currencyTwo.value = toNumberWithCommas(convertedAmount);
+        },
+
+        swapCurrencies() {
+            let temp = this.currencyOne;
+            this.currencyOne = this.currencyTwo;
+            this.currencyTwo = temp;
         }
     }
 };
