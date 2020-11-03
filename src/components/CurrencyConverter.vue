@@ -1,5 +1,10 @@
 <template>
     <section class="container" is-fluid is-fullhd>
+        <div class="section" v-if="areCurrenciesSelected === false">
+            <b-message title="Missing Input" type="is-danger" has-icon aria-close-label="close message">
+                There is one or more currencies missing. Please make sure to select a currency from both drop down menus.
+            </b-message>
+        </div>
         <!-- conversion dropdown and textfields -->
         <div class="columns is-centered">
             <!-- Dropdown for currency 1 -->
@@ -103,7 +108,8 @@ export default {
             value: '',
             currency: ''
         },
-        currencies: []
+        currencies: [],
+        areCurrenciesSelected: true
     }),
 
     async mounted() {
@@ -112,7 +118,14 @@ export default {
 
     methods: {
         async convertCurrency() {
-            if(this.currencyOne.value === '') {
+            if(this.currencyOne.currency === '' || this.currencyTwo.currency === '') {
+                this.areCurrenciesSelected = false;
+                return;
+            }
+
+            this.areCurrenciesSelected = true;
+            
+            if(this.currencyOne.value === '' || !isNaN(this.currencyOne.value)) {
                 this.currencyOne.value = "0.00"
             }
 
