@@ -1,4 +1,5 @@
 require('dotenv').config();
+import { sortObjArrayAscending } from './general.js'
 
 /**
  * Returns the list of currencies from free.currconv.com
@@ -28,7 +29,7 @@ export async function getCurrencies() {
                 currencyName: data[currency].currencyName
             });
         }
-
+        currencies = sortObjArrayAscending(currencies, "id");
         localStorage.setItem('currencies', JSON.stringify(currencies));
     }
 
