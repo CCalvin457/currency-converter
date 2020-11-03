@@ -1,7 +1,15 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <currency-converter/>
+    <b-navbar :mobile-burger="false" shadow spaced>
+        <template slot="brand" tag="router-link" :to="{ path: '/' }">
+          <b-navbar-item class="title">
+            <h1>Currency Converter</h1>
+          </b-navbar-item>
+        </template>
+    </b-navbar>
+    <div class="section">
+      <currency-converter/>
+    </div>
   </div>
 </template>
 
