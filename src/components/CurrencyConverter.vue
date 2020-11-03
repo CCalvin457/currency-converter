@@ -1,10 +1,10 @@
 <template>
-    <section>
+    <section class="container" is-fluid is-fullhd>
         <!-- conversion dropdown and textfields -->
-        <div class="columns">
+        <div class="columns" is-centered>
             <!-- Dropdown for currency 1 -->
-            <div class="column">
-                <b-dropdown v-model="currencyOne.currency">
+            <div class="column" is-5>
+                <b-dropdown v-model="currencyOne.currency" scrollable>
                     <button class="button is-primary" slot="trigger" slot-scope="{ active }">
                         <span>{{currencyOne.currency === '' ? 'Select Currency...' : currencyOne.currency}}</span>
                         <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
@@ -23,12 +23,12 @@
                 </b-field>
             </div>
             <!-- Swaps the two selected currencies -->
-            <div class="column">
-                <b-button>Swap</b-button>
+            <div class="column" is-2>
+                <b-button icon-right="swap-horizontal-bold" is-large></b-button>
             </div>
             <!-- Dropdown for currency 2 -->
-            <div class="column">
-                <b-dropdown v-model="currencyTwo.currency">
+            <div class="column" is-5>
+                <b-dropdown v-model="currencyTwo.currency" scrollable>
                     <button class="button is-primary" slot="trigger" slot-scope="{ active }">
                         <span>{{currencyTwo.currency === '' ? 'Select Currency...' : currencyTwo.currency}}</span>
                         <b-icon :icon="active ? 'menu-up' : 'menu-down'"></b-icon>
@@ -49,8 +49,10 @@
             </div>
         </div>
         <!-- Calls function to convert amount to target currency -->
-        <div class="columns">
-            <b-button @click="convertCurrency">Convert</b-button>
+        <div class="columns" is-centered>
+            <div class="column" is-half>
+                <b-button @click="convertCurrency">Convert</b-button>
+            </div>
         </div>
     </section>
 </template>
